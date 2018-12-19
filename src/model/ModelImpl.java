@@ -1,47 +1,34 @@
 package model;
 
-import java.util.Random;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class ModelImpl implements Model {
-
-	private static boolean[] estratti;
-
-	static {
-		ModelImpl.estratti = new boolean[90];
-	}
-
+	
+	private List<Integer> numbers = new ArrayList<>();
+	
 	@Override
 	public void newGame() {
-		for (int i = 0; i < 90; ++i) {
-			ModelImpl.estratti[i] = false;
+		numbers.clear();
+		
+		for (int i = 1; i <= 90; i++) {
+			numbers.add(i);
 		}
-	}
-
-	@Override
-	public void estrai() {
-
+		
+		Collections.shuffle(numbers);
 	}
 
 	@Override
 	public int getNewValue() {
-		int variable = 0;
-		for (int i = 0; i < 90; ++i) {
-			if (!ModelImpl.estratti[i]) {
-				++variable;
-			}
-		}
-		if (variable > 0) {
-			Random rand;
-			int number;
-			for (rand = new Random(), number = rand.nextInt(90); ModelImpl.estratti[number]; number = rand.nextInt(90)) {
-			}
-			ModelImpl.estratti[number] = true;
-			variable = number + 1;
-		} else {
-			variable = -1;
-		}
+		int number = -1;
 		
-		return variable;
+		if (numbers.size() != 0) {
+			number = numbers.get(0);
+			numbers.remove(0);
+		}
+
+		return number;
 	}
 
 }
